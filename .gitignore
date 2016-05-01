@@ -1,0 +1,9 @@
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
+
+#Visual Studio files
+*.sdf
+obj/
+[Dd]ebug*/
+[Rr]elease*/
