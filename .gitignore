@@ -4,6 +4,8 @@
 
 #Visual Studio files
 *.sdf
+*.ilk
+*.pdb
 obj/
 [Dd]ebug*/
 [Rr]elease*/
