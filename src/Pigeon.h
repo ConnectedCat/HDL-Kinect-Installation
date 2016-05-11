@@ -11,6 +11,7 @@
 
 #include "ofMain.h"
 #include "Animation.h"
+#include "Diamond.h"
 
 class Pigeon {
 public:
@@ -21,6 +22,8 @@ public:
 	void fly();
 	void walk();
 	void turn();
+	void splat();
+	Diamond shitDiamond();
 	void setState();
 
 	float speed;
@@ -34,6 +37,7 @@ public:
 
 	int rangeCoef = 340;
 	bool flip = false;
+	bool canShit;
 
 	Pigeon();
 

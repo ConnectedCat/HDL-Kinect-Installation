@@ -11,12 +11,16 @@
 Animation::Animation() {
 }
 
-void Animation::setup(string _imagePrefix, string _imageType, int _count) {
+void Animation::setup(string _imagePrefix, string _imageType, int _count, bool _randomized, bool _single) {
 	imageCount = _count;
+	running = true;
+	singleRun = _single;
 	images.clear();
-
-	int startFrame = int(ofRandom(imageCount));
-
+	int startFrame = 0;
+	if (_randomized) {
+		int startFrame = int(ofRandom(imageCount));
+	}
+	
 	for (int i = startFrame; i < imageCount; i++) {
 		string filename = _imagePrefix + padded(ofToString(i), 4) + "." + _imageType;
 		ofImage tempImage;
@@ -40,10 +44,25 @@ void Animation::update() {
 }
 
 void Animation::display(float _xpos, float _ypos, float _zpos) {
-	ofSetColor(255, 255, 255);
-	frame = (frame + 1) % imageCount;
-	images[frame].setAnchorPercent(0.5, 0.5);
-	images[frame].draw(_xpos, _ypos, _zpos);
+	//ofSetColor(255, 255, 255);
+	if (running) {
+		frame = (frame + 1) % imageCount;
+		images[frame].setAnchorPercent(0.5, 0.5);
+		images[frame].draw(_xpos, _ypos, _zpos);
+		if ((singleRun) && (frame == 0)) {
+			running = false;
+		}
+	}
+	else {
+		images[imageCount-1].draw(_xpos, _ypos, _zpos);
+	}
+	
+}
+
+void Animation::resize(int _newwidth, int _newheight) {
+	for (int i = 0; i < imageCount; i++) {
+		images[i].resize(_newwidth, _newheight);
+	}
 }
 
 int Animation::getWidth() {

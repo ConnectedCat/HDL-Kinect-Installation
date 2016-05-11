@@ -5,7 +5,7 @@
 #include "Pigeon.h"
 #include "Diamond.h"
 
-#define PNUM 15
+#define PNUM 10
 
 class ofApp : public ofBaseApp{
 
@@ -41,7 +41,8 @@ class ofApp : public ofBaseApp{
 		vector<ofxKinectForWindows2::Data::Body> bodies;
 		string posLOut, posROut, posBOut;
 
-		Pigeon myPigeons[PNUM];
+		deque<Pigeon> myPigeons;
+		//Pigeon myPigeons[PNUM];
 		ofVec3f positions[PNUM];
 
 		vector<Diamond> diamonds;

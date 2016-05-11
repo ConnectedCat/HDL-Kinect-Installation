@@ -6,6 +6,7 @@
 *.sdf
 *.ilk
 *.pdb
+*.opendb
 obj/
 [Dd]ebug*/
 [Rr]elease*/

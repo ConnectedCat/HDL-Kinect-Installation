@@ -25,9 +25,11 @@ public:
 	ofVec3f velocity;
 
 	Animation animation;
+	string name;
 
 	Diamond();
 
 private:
+	string random_string(size_t length);
 };
 #endif /* Diamond_h */

@@ -13,14 +13,18 @@
 
 class Animation {
 public:
-	void setup(string _imagePrefix, string _imageType, int _count);
+	void setup(string _imagePrefix, string _imageType, int _count, bool _randomized, bool _single);
 	void update();
 	void display(float _xpos, float _ypos, float _zpos);
+	void resize(int _newwidth, int _newheight);
+
 	int getWidth();
 	int getHeight();
 
 	vector <ofImage> images;
 	int frameRate;
+	bool running;
+	bool singleRun;
 
 	Animation();
 
