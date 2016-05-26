@@ -21,6 +21,8 @@ public:
 
 	void fly();
 	void walk();
+	void run();
+	void scare();
 	void turn();
 	void splat();
 	Diamond shitDiamond();

@@ -5,7 +5,7 @@
 #include "Pigeon.h"
 #include "Diamond.h"
 
-#define PNUM 10
+#define PNUM 17                                          
 
 class ofApp : public ofBaseApp{
 

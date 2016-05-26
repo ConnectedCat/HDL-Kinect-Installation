@@ -23,9 +23,6 @@ void Diamond::display() {
 }
 
 void Diamond::update() {
-	if (position.y - animation.getHeight() >= ofGetHeight()) {
-		velocity.set(0, 0, 0);
-	}
 	position = position + velocity;
 }
 

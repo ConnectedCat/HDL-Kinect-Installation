@@ -4,7 +4,7 @@ void ofApp::setup(){
 	ofSetWindowShape(width, height);
 	ofSetFrameRate(20);
 	for (int i = 0; i<PNUM; i++) {
-		positions[i].set(ofRandom(-340, ofGetWidth() + 340), ofGetHeight() - 63, ofRandom(-500, -100));
+		positions[i].set(ofRandom(-340, ofGetWidth() + 340), ofGetHeight() - 63, ofRandom(-300, -100));
 		Pigeon newPigeon;
 		newPigeon.setup(positions[i]);
 		myPigeons.push_back(newPigeon);
@@ -65,21 +65,21 @@ void ofApp::update(){
 						if (myPigeons[i].state == "walking") {
 							myPigeons[i].fly();
 						}
-						if (myPigeons[i].state == "flying" && myPigeons[i].position.y < ofGetHeight() / 2) {
-							myPigeons[i].turn();
-							if (myPigeons[i].canShit) {
-								Diamond diamond = myPigeons[i].shitDiamond();
-								diamonds.push_back(diamond);
-							}
-						}
+						//if (myPigeons[i].state == "flying" && myPigeons[i].position.y < ofGetHeight() / 2) {
+						//	myPigeons[i].turn();
+						//	if (myPigeons[i].canShit) {
+						//		Diamond diamond = myPigeons[i].shitDiamond();
+						//		diamonds.push_back(diamond);
+						//	}
+						//}
 					}
 
-					if ((xdistancelf <= 20 && ydistancelf <= 40) || (xdistancerf <= 20 && ydistancerf <= 40)) {
-						myPigeons[i].splat();
-						Pigeon corpse = myPigeons[i];
-						myPigeons.erase(myPigeons.begin() + i);
-						myPigeons.push_front(corpse);
-					}
+					//if ((xdistancelf <= 20 && ydistancelf <= 40) || (xdistancerf <= 20 && ydistancerf <= 40)) {
+					//	myPigeons[i].splat();
+					//	Pigeon corpse = myPigeons[i];
+					//	myPigeons.erase(myPigeons.begin() + i);
+					//	myPigeons.push_front(corpse);
+					//}
 				}
 			}
 		}
@@ -93,6 +93,9 @@ void ofApp::update(){
 	if (diamonds.size() > 0) {
 		for (int i = 0; i < diamonds.size(); i++) {
 			diamonds[i].update();
+			if (diamonds[i].position.y >= ofGetHeight() + 400.0) {
+				diamonds.erase(diamonds.begin() + i);
+			}
 		}
 	}
 
@@ -100,16 +103,14 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	
-	
 	if (!bFullscreen) {
 		kinect.getBodyIndexSource()->draw(0, 0, width, height);
-		kinect.getBodySource()->drawProjected(0, 0, width, height, ofxKFW2::ProjectionCoordinates::DepthCamera);
+		//kinect.getBodySource()->drawProjected(0, 0, width, height, ofxKFW2::ProjectionCoordinates::DepthCamera);
 	}
 	else {
 		kinect.getBodyIndexSource()->draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
 	}
-	
+
 	if (diamonds.size() > 0) {
 		for (int i = 0; i < diamonds.size(); i++) {
 			diamonds[i].display();
@@ -118,6 +119,8 @@ void ofApp::draw(){
 	for (int i = 0; i<PNUM; i++) {
 		myPigeons[i].display();
 	}
+
+
 }
 
 //--------------------------------------------------------------

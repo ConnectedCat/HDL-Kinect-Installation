@@ -26,7 +26,7 @@ void Pigeon::display() {
 }
 
 void Pigeon::update() {
-	if (!canShit && ofGetElapsedTimeMillis() > 1000) {
+	if (!canShit && ofGetElapsedTimeMillis() > 6000) {
 		canShit = true;
 	}
 
@@ -39,7 +39,7 @@ void Pigeon::update() {
 	if ((position.y >= ofGetHeight() - animation.getHeight() / 2) && (state == "flying")) {
 		walk();
 	}
-	if (position.z >= 0 || position.z <= -600) {
+	if (position.z >= 0 || position.z <= -300) {
 		velocity.z *= -1;
 	}
 	position += velocity;
@@ -54,10 +54,25 @@ void Pigeon::fly() {
 }
 
 void Pigeon::walk() {
-	speed = 4.0;
+	float number = ofRandom(100);
+	string version = "";
+	if (number > 50) {
+		version = "1";
+		speed = 4.0;
+	}
+	else {
+		version = "2";
+		speed = 3.0;
+	}
 	velocity.set(speed, 0, 0);
-	animation.setup("Walk/walk1/frame_", "png", 20, true, false);
+	animation.setup("Walk/walk"+version+"/frame_", "png", 20, true, false);
 	state = "walking";
+}
+
+void Pigeon::run() {
+}
+
+void Pigeon::scare() {
 }
 
 void Pigeon::turn() {

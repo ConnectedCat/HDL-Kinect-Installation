@@ -17,8 +17,8 @@ void Animation::setup(string _imagePrefix, string _imageType, int _count, bool _
 	singleRun = _single;
 	images.clear();
 	int startFrame = 0;
-	if (_randomized) {
-		int startFrame = int(ofRandom(imageCount));
+	if(_randomized) {
+		startFrame = int(ofRandom(imageCount));
 	}
 	
 	for (int i = startFrame; i < imageCount; i++) {
