@@ -31,8 +31,10 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-		int width = 1024;
-		int height = 848;
+		int width = APP_WIDTH;
+		int height = APP_HEIGHT;
+
+		int pigeonPlankOffset = 63;
 
 		bool bFullscreen;
 

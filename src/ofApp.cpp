@@ -7,7 +7,7 @@ void ofApp::setup(){
 
 	ofSetFrameRate(20);
 	for (int i = 0; i<PNUM; i++) {
-		positions[i].set(ofRandom(-340, APP_WIDTH + 340), APP_HEIGHT - 63, ofRandom(-300, -100));
+		positions[i].set(ofRandom(-340, APP_WIDTH + 340), APP_HEIGHT - pigeonPlankOffset, ofRandom(-300, -100));
 		Pigeon newPigeon;
 		newPigeon.setup(positions[i]);
 		myPigeons.push_back(newPigeon);
@@ -65,16 +65,16 @@ void ofApp::update(){
 			leftFootPos = body.joints[JointType_FootLeft].getPosition();
 			rightFootPos = body.joints[JointType_FootRight].getPosition();
 
-			rightHandPos.x = ofMap(rightHandPos.x, -0.8, 0.8, 0, width);
-			leftHandPos.x = ofMap(leftHandPos.x, -0.8, 0.8, 0, width);
-			rightFootPos.x = ofMap(rightFootPos.x, -0.8, 0.8, 0, width);
-			leftFootPos.x = ofMap(leftFootPos.x, -0.8, 0.8, 0, width);
+			rightHandPos.x = ofMap(rightHandPos.x, -1, 1, 0, width);
+			leftHandPos.x = ofMap(leftHandPos.x, -1, 1, 0, width);
+			rightFootPos.x = ofMap(rightFootPos.x, -1, 1, 0, width);
+			leftFootPos.x = ofMap(leftFootPos.x, -1, 1, 0, width);
 
 
-			rightHandPos.y = ofMap(rightHandPos.y, -0.8, 0.8, height, 0);
-			leftHandPos.y = ofMap(leftHandPos.y, -0.8, 0.8, height, 0);
-			rightFootPos.y = ofMap(rightFootPos.y, -0.8, 0.8, height, 0);
-			leftFootPos.y = ofMap(leftFootPos.y, -0.8, 0.8, height, 0);
+			rightHandPos.y = ofMap(rightHandPos.y, -1, 1, height, 0);
+			leftHandPos.y = ofMap(leftHandPos.y, -1, 1, height, 0);
+			rightFootPos.y = ofMap(rightFootPos.y, -1, 1, height, 0);
+			leftFootPos.y = ofMap(leftFootPos.y, -1, 1, height, 0);
 
 			for (int i = 0; i<PNUM; i++) {
 				if (myPigeons[i].state != "dead") {
@@ -104,12 +104,12 @@ void ofApp::update(){
 						}
 					}
 
-					if ((xdistancelf <= 20 && ydistancelf <= 40) || (xdistancerf <= 20 && ydistancerf <= 40)) {
-						myPigeons[i].splat();
-						Pigeon corpse = myPigeons[i];
-						myPigeons.erase(myPigeons.begin() + i);
-						myPigeons.push_front(corpse);
-					}
+					//if ((xdistancelf <= 20 && ydistancelf <= 40) || (xdistancerf <= 20 && ydistancerf <= 40)) {
+					//	myPigeons[i].splat();
+					//	Pigeon corpse = myPigeons[i];
+					//	myPigeons.erase(myPigeons.begin() + i);
+					//	myPigeons.push_front(corpse);
+					//}
 				} // end if pigeon isn't dead
 			}//end for every pigeon
 		}//end if body tracked
@@ -162,7 +162,7 @@ void ofApp::draw(){
 	}
 	else {
 		//kinect.getBodyIndexSource()->draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
-		bodyIndexImage.draw(0, 0);
+		bodyIndexImage.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
 	}
 
 	if (diamonds.size() > 0) {
@@ -184,14 +184,21 @@ void ofApp::keyPressed(int key){
 void ofApp::keyReleased(int key){
 	switch (key) {
 		case 'f':
-			bFullscreen = !bFullscreen;
+			bFullscreen = !bFullscreen;       
 
 			if (!bFullscreen) {
-				ofSetWindowShape(width, height);
+				width = APP_WIDTH;
+				height = APP_HEIGHT;
+				ofSetWindowShape(APP_WIDTH, APP_HEIGHT);
 				ofSetFullscreen(false);
 			}
 			else {
 				ofSetFullscreen(true);
+				width = ofGetWindowWidth();
+				height = ofGetWindowHeight();
+				for (int i = 0; i < PNUM; i++) {
+					myPigeons[i].position.y = height - pigeonPlankOffset;
+				}
 			}
 			break;
 	}
